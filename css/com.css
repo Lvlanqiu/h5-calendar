@@ -1,0 +1,56 @@
+html {font-size: 20px;font-family: "PingFang SC","微软雅黑";} 
+body{font-family: "PingFang SC","微软雅黑";}
+.font20{font-size: .2rem;}
+.font22{font-size: .22rem;}
+.font24{font-size: .24rem;}
+.font26{font-size: .26rem;}
+.font28{font-size: .28rem;}
+.font30{font-size: .30rem;}
+.font32{font-size: .32rem;}
+.color-blue{color: #1296db;}
+.color-red{color: red;}
+.color-def{color: #333;}
+.color-grey{color: #555;}
+.color-promt{color: #ccc;}
+/*竖向弹性居中*/
+.s-flex-row{
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+}
+.s-flex-row>*{
+	flex: 1;
+}
+
+/*闪烁*/
+@-webkit-keyframes flash {
+    0%{
+        opacity: 0.5;
+    }
+    50%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0.5;
+    }
+}
+@keyframes flash {
+    0%{
+        opacity: 0.5;
+    }
+    50%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0.5;
+    }
+}
+.flash{
+    position: relative;
+    color: #1296db;
+    -webkit-animation:flash 2s infinite  cubic-bezier(0.42, 0, 0.58, 1.0) ;
+    animation:flash 2s infinite  cubic-bezier(10.42, 0, 0.58, 1.0) ;
+}

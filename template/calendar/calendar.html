@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>日历</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/com.css" rel="stylesheet" />
+		<link href="calendar.css" rel="stylesheet" />
+		<link href="../../dist/css/swiper.min.css" rel="stylesheet" />
+		<style type="text/css">
+			[v-cloak]{display: none;}
+			#g-calendar{padding-top: 1.3rem;}
+			.g-context{
+				position: relative;
+				min-height: 3rem;
+				margin: .21rem;
+				padding: 0 .21rem .15rem .21rem;
+				background-color: white;
+				border-radius: 8px;
+			}
+			.g-context .g-context-title{
+				position: relative;
+				height: .8rem;
+				line-height: .8rem;
+			}
+			.g-context .g-context-title::after{
+				content: "  ";
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				height: 1px;
+				background-color: #ccc;
+				-webkit-transform: scaleY(.5);
+				transform: scaleY(.5);
+			}
+		</style>
+	</head>
+	<div v-cloak id="app">
+		<header id="header" class="mui-bar mui-bar-transparent">
+			<div id="header_div"></div> 
+		    <h1 class="mui-title">{{year}}年{{month}}月</h1>
+		</header>
+		<div class="mui-content">
+			<div id="g-calendar" class="font30">
+				<div id="g-weekdays">
+					<div class="g-week color-grey"  v-for="(item,index) in weekList">
+						<div class="g-item">
+							<span :class="{'color-red':item.rest,}">{{item.name}}</span>
+						</div>
+					</div>
+					<div class="swiper-container">
+					  	<div id="g-calendar-dom" class="swiper-wrapper"></div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="g-context font26">
+				<div class="g-context-title">
+					<span>全天&nbsp;|&nbsp;</span>
+					<span class="color-red">{{textValue}}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<body>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/vue.min.js"></script>
+		<script src="../../js/immersed.js"></script>
+		<script src="../../js/rem.js"></script>
+		<script src="../../dist/js/swiper.min.js"></script>
+		<script src="calendar.js"></script>
+		<script type="text/javascript">
+			(function(global,$){
+				var calendar = new Calendar();
+				global.vm = new Vue({
+					el:'#app',
+					data:{
+						year: '',
+						month: '',
+						weekList:[
+							{"name":"日","rest":true},
+							{"name":"一","rest":false},
+							{"name":"二","rest":false},
+							{"name":"三","rest":false},
+							{"name":"四","rest":false},
+							{"name":"五","rest":false},
+							{"name":"六","rest":true},
+						],
+						textValue: ''
+					},
+					methods:{
+						previous: function(){
+							mySwiper.slidePrev();
+						},
+						next: function(){
+							mySwiper.slideNext();
+						},
+					}
+				})
+				calendar.domInit();
+				vm.year = calendar.cYear;
+				vm.month = calendar.cMonth+1;
+				var max = 2;
+				var mySwiper = new Swiper('.swiper-container', {
+					initialSlide :1,
+					runCallbacksOnInit : false,
+					on: {
+					    transitionEnd: function(swiper) {
+					    	if(mySwiper){
+					    		calendar.updateTitle();
+						    	if(mySwiper.activeIndex===0){
+						    		var dom = calendar.getDom(calendar.updateHead(),calendar.head.y,calendar.head.m);
+						    		mySwiper.prependSlide(dom);
+						    		max+=1;
+						    	}
+						    	if(mySwiper.activeIndex === max){
+						    		var dom = calendar.getDom(calendar.updateFoot(),calendar.foot.y,calendar.foot.m);
+						    		mySwiper.appendSlide(dom)
+						    		max+=1;
+						    	}
+					    	}
+						}
+					}
+				})
+//				$.plusReady(function(){
+//					mui("#g-calendar").on('tap','.g-calendar-item',function(e){
+//						vm.textValue = this.dataset.holiday||'';
+//						clearSelect();
+//						this.classList.add('s-select');
+//					})
+//				})
+				mui("#g-calendar").on('tap','.g-calendar-item',function(e){
+					vm.textValue = this.dataset.holiday||'';
+					clearSelect();
+					this.classList.add('s-select');
+				})
+				var clearSelect = function(){
+					var dom = document.getElementsByClassName('g-calendar-item');
+//					var dom = document.getElementsByClassName('swiper-slide-active')[0].childNodes;
+					for(var i = 0; i < dom.length; i++){
+						dom[i].classList.remove('s-select');
+					}
+				}
+			})(window,mui)
+		</script>
+	</body>
+
+</html>

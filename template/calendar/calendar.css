@@ -1,0 +1,73 @@
+html,body{
+	width:100%
+}
+.g-content{
+	width: 100%;
+}
+#g-calendar{
+	width: 100%;
+	background-color: white;
+	padding: .2rem;
+}
+.g-head{
+	display: flex;
+	height: .9rem;
+}
+.g-head div:nth-child(odd){width: 1rem;text-align: center;line-height: .9rem;}
+.g-head div:nth-child(even){flex: 1;text-align: center;line-height: .9rem;}
+#g-weekdays{
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	text-align: center;
+}
+.g-days{padding-bottom: .1rem;}
+.g-holiday{position: relative;}
+.g-holiday::after{
+	content: "";
+	position: absolute;
+	width: 5px;
+	height: 5px;
+	background-color: #ccc;
+	border-radius: 50%;
+	bottom: .1rem;
+	left: 46%;
+}
+.swiper-container{width: 100%;}
+.swiper-container .swiper-slide{
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	text-align: center;
+}
+#g-weekdays .swiper-slide>*,#g-weekdays .g-week{
+	width: calc(100%/7);
+	display: flex;
+	justify-content: center;
+}
+#g-weekdays .g-item{
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: .9rem;
+	height: .9rem;
+}
+#g-weekdays .g-item>*{
+	line-height: .32rem;
+}
+#g-weekdays .g-item.s-select{
+	color: #fff;
+}
+.s-select>div{
+	background-color: #0088ff;
+	box-shadow: 0 3px 2px #aaa;
+	border-radius: 50%;
+}
+.s-select>div span{
+	color: #fff;
+}
+.s-select::after{
+	height: 0;
+}
